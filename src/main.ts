@@ -4,6 +4,9 @@ import {Context} from '@actions/github/lib/context'
 
 async function run(): Promise<void> {
   try {
+    if (!github.context.payload.pull_request) {
+      return
+    }
     const token = core.getInput('token', {required: true})
     const requireAssignee = core.getInput('require_assignee', {required: true})
     const gh = new github.GitHub(token)
@@ -21,7 +24,7 @@ async function run(): Promise<void> {
 async function assignPullRequest(
 { gh, context }: { gh: github.GitHub; context: Context }): Promise<boolean> {
   if (!context.payload.pull_request) {
-    return false
+    throw "Not on a Pull Request";
   }
   const owner = context.repo.owner
   const repo = context.repo.repo
