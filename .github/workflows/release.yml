@@ -8,10 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - run: |
-        npm install
-        npm run all
+    - uses: actions/checkout@v1
+    - run: |
+      npm install
+      npm run all
   publish:
     runs-on: ubuntu-latest
     needs: build
