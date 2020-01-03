@@ -1,10 +1,22 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Pull Request Assignee'
+description: 'Defines the assignee of the pull request to whom opened it'
+author: 'Augusto Pascutti'
+branding:
+  icon: package
+  color: green
+on:
+  pull_request:
+    types: [opened, assigned, unassigned]
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  token:
+    description: >
+      Authentication token to fetch Pull Request information, will atuomatically
+      be retrieved from environment if none is passed.
+    default: ${{ github.token }}
+  require_assignee:
+    description: >
+      If no assignee can be defined, prevent merge.
+    default: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

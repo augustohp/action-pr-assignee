@@ -1,0 +1,23 @@
+name: "Release"
+
+on: 
+  release:
+    types: [published, unpublished, deleted]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: build
+        run: |
+          npm install
+          npm run all
+      - name: npm login
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+      - name: npm publish
+        if: github.event.action == 'published'
+        run: npm publish --tag '${{ github.ref }}'
+      - name: npm unpublish
+        if: github.event.action == 'unpublished' || github.event.action == 'deleted'
+        run: npm unpublish '@augustohp/action-pr-assignee@${{ github.ref }}'

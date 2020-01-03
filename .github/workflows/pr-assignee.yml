@@ -1,0 +1,13 @@
+name: "PR Assignee"
+
+on: 
+  pull_request:
+    types: [opened, unassigned]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./
+        with:
+          require_assignee: true

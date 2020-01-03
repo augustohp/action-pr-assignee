@@ -1,8 +1,9 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
-  "private": true,
-  "description": "TypeScript template action",
+  "name": "@augustohp/action-pr-assignee",
+  "version": "1.0.0",
+  "description": "Assigns a PR tot he person who opened it.",
+  "author": "augusto.hp@gmail.com",
+  "license": "MIT",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -13,19 +14,20 @@
     "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run pack && npm test"
   },
+  "bugs": {
+    "url": "https://github.com/augustohp/action-pr-assignee/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/augustohp/action-pr-assignee.git"
   },
-  "keywords": [
-    "actions",
-    "node",
-    "setup"
-  ],
-  "author": "YourNameOrOrganization",
-  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "public"
+  },
   "dependencies": {
-    "@actions/core": "^1.2.0"
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^2.0.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
