@@ -1,6 +1,12 @@
 name: 'Pull Request Assignee'
 description: 'Defines the assignee of the pull request to whom opened it'
 author: 'Augusto Pascutti'
+branding:
+  icon: package
+  color: green
+on:
+  pull_request:
+    types: [opened, assigned, unassigned]
 inputs:
   token:
     description: >
