@@ -3187,10 +3187,16 @@ const github = __importStar(__webpack_require__(469));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            if (!github.context.payload.pull_request) {
+                return;
+            }
             const token = core.getInput('token', { required: true });
             const requireAssignee = core.getInput('require_assignee', { required: true });
             const gh = new github.GitHub(token);
-            const isSomeoneAssigned = yield assignPullRequest(gh, github.context);
+            const isSomeoneAssigned = yield assignPullRequest({
+                gh,
+                context: github.context
+            });
             if (!isSomeoneAssigned && requireAssignee) {
                 core.setFailed('Could not assign anyone to the PullRequest.');
                 return;
@@ -3201,10 +3207,10 @@ function run() {
         }
     });
 }
-function assignPullRequest(gh, context) {
+function assignPullRequest({ gh, context }) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!context.payload.pull_request) {
-            return false;
+            throw new Error('Not on a Pull Request');
         }
         const owner = context.repo.owner;
         const repo = context.repo.repo;
@@ -3216,7 +3222,9 @@ function assignPullRequest(gh, context) {
             pull_number
         });
         // Don't affect Pull Requests which already have assignees
-        if (pullRequest.data.assignees.length > 0) {
+        const existingAssignees = pullRequest.data.assignees.length;
+        if (existingAssignees > 0) {
+            core.warning(`PR #${pull_number} already has ${existingAssignees} assignee(s).`);
             return true;
         }
         // Will define the assignee of the pull request

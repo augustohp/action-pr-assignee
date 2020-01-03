@@ -11,7 +11,10 @@ async function run(): Promise<void> {
     const requireAssignee = core.getInput('require_assignee', {required: true})
     const gh = new github.GitHub(token)
 
-    const isSomeoneAssigned = await assignPullRequest({ gh, context: github.context })
+    const isSomeoneAssigned = await assignPullRequest({
+      gh,
+      context: github.context
+    })
     if (!isSomeoneAssigned && requireAssignee) {
       core.setFailed('Could not assign anyone to the PullRequest.')
       return
@@ -21,10 +24,15 @@ async function run(): Promise<void> {
   }
 }
 
-async function assignPullRequest(
-{ gh, context }: { gh: github.GitHub; context: Context }): Promise<boolean> {
+async function assignPullRequest({
+  gh,
+  context
+}: {
+  gh: github.GitHub
+  context: Context
+}): Promise<boolean> {
   if (!context.payload.pull_request) {
-    throw "Not on a Pull Request";
+    throw new Error('Not on a Pull Request')
   }
   const owner = context.repo.owner
   const repo = context.repo.repo
@@ -39,7 +47,9 @@ async function assignPullRequest(
   // Don't affect Pull Requests which already have assignees
   const existingAssignees = pullRequest.data.assignees.length
   if (existingAssignees > 0) {
-    core.warning(`PR #${pull_number} already has ${existingAssignees} assignee(s).`)
+    core.warning(
+      `PR #${pull_number} already has ${existingAssignees} assignee(s).`
+    )
     return true
   }
 
