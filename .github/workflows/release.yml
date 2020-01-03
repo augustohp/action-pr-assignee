@@ -1,4 +1,4 @@
-name: "Release NPM Packages"
+name: "Release"
 
 # Publish new packages upon tag 
 on: 
