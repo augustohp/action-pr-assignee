@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - npm publish --tag '$GITHUB_REF'
+      - npm publish --tag '${{ github.GITHUB_REF }}'
 
 # Unpublish deleted releases
 on: 
