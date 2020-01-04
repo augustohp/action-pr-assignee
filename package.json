@@ -1,6 +1,6 @@
 {
   "name": "@augustohp/action-pr-assignee",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Assigns a PR tot he person who opened it.",
   "author": "augusto.hp@gmail.com",
   "license": "MIT",
