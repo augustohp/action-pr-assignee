@@ -63,11 +63,11 @@ async function assignPullRequest({
     assignees
   })
 
-  const status = response.headers.status
+  const status = response.status
   core.debug(
     `Assigning #${pull_number} to '${assignees[0]}' returned '${status}'.`
   )
-  return status.startsWith('201')
+  return status === 201
 }
 
 run()
